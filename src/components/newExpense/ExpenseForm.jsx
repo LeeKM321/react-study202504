@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ onSave }) => {
   // 상태값을 처리하는 함수 (hook)
   // useState는 배열을 리턴합니다. 디스트럭쳐링 문법으로 뽀개서 사용하는 것이 일반적.
   // 첫번째 요소는 관리할 상태값의 초기값
@@ -34,7 +34,13 @@ const ExpenseForm = () => {
     // 리액트는 단순히 변수가 변경된다고 화면의 렌더링을 변경하지 않고
     // 오로지 상태값이 변화되었다는 감지에 의해서만 재렌더링을 시도.
     // 상태가 변화했다는 트리거는 useState로부터 받은 setter 뿐입니다.
-    console.log(userInput);
+
+    // 입력받은 모든 정보를 App.js로 보내자. (userInput)
+    // 어떻게? -> App.jsx가 내려준 함수를 호출하면서, 매개값으로 던지면 됩니다.
+    onSave({
+      ...userInput,
+      date: new Date(userInput.date),
+    });
 
     // 다음 입력을 위한 입력창 리셋
     setUserInput({
