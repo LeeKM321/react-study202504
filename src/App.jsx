@@ -12,11 +12,21 @@ import Card from './UI/Card';
 function App() {
   const expenses = [
     { id: 1, title: '냠냠치킨', price: 19000, date: new Date(2023, 6, 19) },
-    { id: 2, title: '양파', price: 5000, date: new Date(2023, 6, 20) },
+    { id: 2, title: '양파', price: 5000, date: new Date(2022, 5, 20) },
+    { id: 3, title: '도미노피자', price: 35000, date: new Date(2021, 3, 21) },
+    { id: 4, title: '마라탕후루', price: 18000, date: new Date(2024, 11, 13) },
   ];
 
   // 지출 객체 배열을 상태변수로 관리 (변화가 생기면 재 렌더링 대상으로 삼기 위해)
   const [expenseList, setExpenseList] = useState(expenses);
+
+  // 선택된 연도값 상태 관리 -> 연도가 바뀌면 렌더링 다시하고 싶으니까!
+  const [filteredYear, setFilteredYear] = useState(
+    new Date().getFullYear().toString(),
+  );
+
+  // 자식 컴포넌트인 ExpenseFilter에게 내려줄 함수
+  const filterChangeHandler = (selectedYear) => {};
 
   // 자식 컴포넌트의 데이터를 부모 컴포넌트에서 받아내는 방법. (props drilling)
   const addExpenseHandler = (newEx) => {
@@ -33,7 +43,7 @@ function App() {
     <>
       <NewExpense onAddExpense={addExpenseHandler} />
       <Card className='expenses'>
-        <ExpenseFilter />
+        <ExpenseFilter onChangeFilter={filterChangeHandler} />
         {expenseList.map((item) => (
           <ExpenseItem
             key={item.id} // 반복문을 통해 같은 컴포넌트를 표현할 때, 각각을 구분할 수 있게 해 주는 props
