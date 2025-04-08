@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import Hello from './components/Example';
+import Greet from './components/Greet';
+import Bye from './components/Bye';
 
 function App() {
   /*
@@ -20,10 +23,8 @@ function App() {
 
   return (
     <>
-      <h1 className='title'>안뇽 {subject}</h1>
-      <h2>React 학습 시작!</h2>
-      <label htmlFor='username'>이름</label>
-      <input type='text' id='username' />
+      <Greet />
+      <Bye />
     </>
   );
 }
