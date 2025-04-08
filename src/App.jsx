@@ -3,6 +3,7 @@ import './App.css';
 import Hello from './components/Example';
 import Greet from './components/Greet';
 import Bye from './components/Bye';
+import ExpenseItem from './components/expenses/ExpenseItem';
 
 function App() {
   /*
@@ -23,8 +24,7 @@ function App() {
 
   return (
     <>
-      <Greet />
-      <Bye />
+      <ExpenseItem />
     </>
   );
 }
