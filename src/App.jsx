@@ -6,6 +6,8 @@ import Bye from './components/Bye';
 import ExpenseItem from './components/expenses/ExpenseItem';
 import NoName from './NoName';
 import NewExpense from './components/newExpense/NewExpense';
+import ExpenseFilter from './components/expenses/ExpenseFilter';
+import Card from './UI/Card';
 
 function App() {
   const expenses = [
@@ -30,7 +32,8 @@ function App() {
   return (
     <>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <div className='expenses'>
+      <Card className='expenses'>
+        <ExpenseFilter />
         {expenseList.map((item) => (
           <ExpenseItem
             key={item.id} // 반복문을 통해 같은 컴포넌트를 표현할 때, 각각을 구분할 수 있게 해 주는 props
@@ -39,7 +42,7 @@ function App() {
             date={item.date}
           />
         ))}
-      </div>
+      </Card>
     </>
   );
 }
