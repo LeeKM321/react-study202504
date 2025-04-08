@@ -4,6 +4,7 @@ import Hello from './components/Example';
 import Greet from './components/Greet';
 import Bye from './components/Bye';
 import ExpenseItem from './components/expenses/ExpenseItem';
+import NoName from './NoName';
 
 function App() {
   const expenses = [
@@ -15,14 +16,16 @@ function App() {
 
   return (
     <>
-      {expenses.map((item) => (
-        <ExpenseItem
-          key={item.id} // 반복문을 통해 같은 컴포넌트를 표현할 때, 각각을 구분할 수 있게 해 주는 props
-          title={item.title}
-          price={item.price}
-          date={item.date}
-        />
-      ))}
+      <div className='expenses'>
+        {expenses.map((item) => (
+          <ExpenseItem
+            key={item.id} // 반복문을 통해 같은 컴포넌트를 표현할 때, 각각을 구분할 수 있게 해 주는 props
+            title={item.title}
+            price={item.price}
+            date={item.date}
+          />
+        ))}
+      </div>
     </>
   );
 }
