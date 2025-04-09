@@ -2,12 +2,12 @@ import React from 'react';
 import CourseItem from './CourseItem';
 import './CourseList.css';
 
-const CourseList = () => {
+const CourseList = ({ items, onDelete }) => {
   return (
     <ul className='goal-list'>
-      <CourseItem />
-      <CourseItem />
-      <CourseItem />
+      {items.map((item) => (
+        <CourseItem key={item.id} item={item} onDelete={onDelete} />
+      ))}
     </ul>
   );
 };
