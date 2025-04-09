@@ -7,10 +7,16 @@ const USER_LIST = [];
 const App = () => {
   const [userList, setUserList] = useState(USER_LIST);
 
+  const addUserHandler = (newUser) => {
+    console.log(newUser);
+
+    setUserList((prev) => [...prev, newUser]);
+  };
+
   return (
     <div>
-      <AddUsers />
-      <UserList />
+      <AddUsers onAdd={addUserHandler} />
+      <UserList list={userList} />
     </div>
   );
 };
