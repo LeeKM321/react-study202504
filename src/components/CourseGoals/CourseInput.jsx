@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import './CourseInput.css';
+import styles from './CourseInput.module.css';
 import Button from '../../UI/Button';
+import './A.css';
+import './B.css';
 
 const CourseInput = ({ onAdd }) => {
+  // module.css를 사용하면 css 내에서 사용한 클래스 이름을 객체화 해서 전달합니다.
+  const { 'form-control': formControl, invalid } = styles;
+
   // 입력창 상태 변수
   const [enteredText, setEnteredText] = useState('');
   // 입력값이 유효한지에 대한 상태 변수
@@ -41,7 +46,8 @@ const CourseInput = ({ onAdd }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className={`form-control ${!isValid ? 'invalid' : ''}`}>
+      <p className='test'>Hello Module.css~~!!</p>
+      <div className={`${formControl} ${!isValid ? invalid : ''}`}>
         <label>나의 목표</label>
         <input type='text' value={enteredText} onChange={handleInput} />
       </div>
