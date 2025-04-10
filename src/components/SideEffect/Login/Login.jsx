@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Login.module.css';
 import Button from '../../../UI/Button';
 import Card from '../../../UI/Card';
@@ -15,6 +15,27 @@ const Login = ({ onLogin }) => {
 
   // 비밀번호 입력도 유효한지를 상태 관리
   const [pwIsValid, setPwIsValid] = useState();
+
+  useEffect(() => {
+    console.log('useEffect called in Login.jsx!');
+
+    // setTimeout을 이용해서 유효성 검증을 1초 뒤에 실행하도록 작성.
+    // 1초 이내에 새로운 입력값이 들어온다면? -> 상태 변경 -> useEffect가 다시 실행됨
+    const timer = setTimeout(() => {
+      console.log('setTimeout 호출!');
+
+      validateEmailHandler();
+      validatePasswordHandler();
+    }, 1000);
+
+    // cleanup 함수: 컴포넌트가 업데이트 되거나 없어지기 직전에 실행.
+    // 사용자가 1초 이내에 추가 입력 -> 상태 변경(컴포넌트 업데이트) -> 타이머 취소!(유효성 검증 취소!)
+    return () => {
+      clearTimeout(timer);
+    };
+
+    // 의존성 배열에 상태변수를 넣어주면, 그 상태변수가 변경될 때마다 useEffect가 재실행됨.
+  }, [enteredEmail, enteredPw]);
 
   // 이메일이 변경될 때마다 실행할 핸들러
   const emailChangeHandler = (e) => {
@@ -52,7 +73,7 @@ const Login = ({ onLogin }) => {
             id='email'
             value={enteredEmail}
             onChange={emailChangeHandler}
-            onBlur={validateEmailHandler} // blur는 focus의 반대
+            // onBlur={validateEmailHandler} // blur는 focus의 반대
           />
         </div>
         <div
@@ -64,7 +85,7 @@ const Login = ({ onLogin }) => {
             id='password'
             value={enteredPw}
             onChange={passwordChangeHandler}
-            onBlur={validatePasswordHandler}
+            // onBlur={validatePasswordHandler}
           />
         </div>
         <div className={styles.actions}>
