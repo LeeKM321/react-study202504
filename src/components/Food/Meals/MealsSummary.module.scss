@@ -1,0 +1,23 @@
+$main-color: #383838;
+$text-color: white;
+$shadow-color: rgba(0, 0, 0, 0.25);
+
+.summary {
+  text-align: center;
+  width: 90%;
+  max-width: 45rem;
+  margin: auto;
+  margin-top: -10rem;
+  position: relative;
+  padding: 1rem;
+  border-radius: 14px;
+  background-color: $main-color;
+  color: $text-color;
+  box-shadow: 0 1px 18px 10px $shadow-color;
+  font-size: 0.9rem;
+
+  h2 {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+}
