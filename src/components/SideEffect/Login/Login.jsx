@@ -3,7 +3,7 @@ import styles from './Login.module.css';
 import Button from '../../../UI/Button';
 import Card from '../../../UI/Card';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   // 이메일 입력값 상태 관리
   const [enteredEmail, setEnteredEmail] = useState('');
 
@@ -37,6 +37,7 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log('submit 동작함!');
+    onLogin(enteredEmail, enteredPw);
   };
 
   return (
