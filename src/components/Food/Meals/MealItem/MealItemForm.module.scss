@@ -1,0 +1,23 @@
+$btn-color: #8a2b06;
+$btn-hover-color: #641e03;
+
+.form {
+  text-align: right;
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    background-color: $btn-color;
+    border: 1px solid $btn-color;
+    color: white;
+    padding: 0.25rem 2rem;
+    border-radius: 20px;
+    font-weight: bold;
+
+    &:hover,
+    &:active {
+      background-color: $btn-hover-color;
+      border-color: $btn-hover-color;
+    }
+  }
+}
