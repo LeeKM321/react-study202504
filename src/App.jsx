@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MainHeader from './components/SideEffect/MainHeader/MainHeader';
 import Login from './components/SideEffect/Login/Login';
 import Home from './components/SideEffect/Home/Home';
+import { AuthContext } from './components/SideEffect/store/AuthContextProvider';
 
 const App = () => {
-  // 로그인 상태를 관리하는 변수
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, changeLoginStatus } = useContext(AuthContext);
 
   // 서버로 로그인을 요청하는 함수. (나중에 fetch등을 통해 실제로 요청이 들어갈 겁니다.)
   const loginHandler = (email, password) => {
     if (email === 'abc1234@naver.com' && password === 'aaa1111') {
       // 로그인 성공
-      setIsLoggedIn(true);
+      changeLoginStatus(true);
       // 브라우저가 제공하는 저장소 localStorage.
       // 새로고침이나 브라우저를 종료해도 데이터가 계속 유지됨.
       localStorage.setItem('login-flag', '1');
@@ -21,7 +21,7 @@ const App = () => {
   };
 
   const logoutHandler = () => {
-    setIsLoggedIn(false);
+    changeLoginStatus(false);
     localStorage.removeItem('login-flag');
   };
 
@@ -33,7 +33,7 @@ const App = () => {
     // login-flag라는 데이터 있다면 로그인 상태를 변경하자
     const storedLoginFlag = localStorage.getItem('login-flag');
     if (storedLoginFlag === '1') {
-      setIsLoggedIn(true);
+      changeLoginStatus(true);
     }
   }, []);
   // 의존성 배열: useEffect가 실행되어야 하는 트리거 변수.
@@ -41,8 +41,9 @@ const App = () => {
   // 만약 빈 배열을 전달하면 최초 렌더링 과정에서 단 한번만 실행.
 
   return (
+    // 컨텍스트를 생성했다면 전역 상태를 사용하고자 하는 컴포넌트를 Provider로 감싸줍니다.
     <>
-      <MainHeader isLoggedIn={isLoggedIn} onLogout={logoutHandler} />
+      <MainHeader onLogout={logoutHandler} />
       <main style={{ marginTop: '7rem' }}>
         {isLoggedIn && <Home />}
         {!isLoggedIn && <Login onLogin={loginHandler} />}
