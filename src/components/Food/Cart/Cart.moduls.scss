@@ -1,0 +1,52 @@
+$button-color: #8a2b06;
+$hover-active-bg-color: #5a1a01;
+$hover-active-border-color: #5a1a01;
+$hover-active-color: white;
+$button-alt-color: #8a2b06;
+$button-bg-color: #8a2b06;
+$button-color: white;
+
+.cart-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.actions {
+  text-align: right;
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid $button-color;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-left: 1rem;
+
+    &:hover,
+    &:active {
+      background-color: $hover-active-bg-color;
+      border-color: $hover-active-border-color;
+      color: $hover-active-color;
+    }
+  }
+
+  .button--alt {
+    color: $button-alt-color;
+  }
+
+  .button {
+    background-color: $button-bg-color;
+    color: $button-color;
+  }
+}
