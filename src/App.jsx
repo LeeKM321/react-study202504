@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Food/Layout/Header';
 import Meals from './components/Food/Meals/Meals';
 import Cart from './components/Food/Cart/Cart';
+import CartProvider from './components/Food/store/CartProvider';
 
 const App = () => {
   // 카트 모달의 공개 여부를 결정하는 상태 변수
@@ -14,11 +15,11 @@ const App = () => {
   const hideCartHandler = () => setCartIsShown(false);
 
   return (
-    <>
+    <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <Meals />
-    </>
+    </CartProvider>
   );
 };
 

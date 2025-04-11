@@ -43,6 +43,8 @@ const CartProvider = ({ children }) => {
     },
   };
 
+  console.log(cartState);
+
   return (
     <CartContext.Provider value={cartContextData}>
       {children}
