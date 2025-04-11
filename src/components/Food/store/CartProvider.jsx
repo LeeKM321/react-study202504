@@ -7,8 +7,25 @@ import CartContext from './cart-context';
 const cartReducer = (state, action) => {
   if (action.type === 'ADD') {
     // 기존 상태가 가지고 있는 카트 항목에 새로운 항목을 추가.
-    const updateItems = [...state.items, action.item];
-    console.log('추가된 아이템: ', updateItems);
+    // 기존 카트에 이미 추가된 메뉴인지 아닌지를 파악해야 할 것 같다.
+    // findIndex를 사용해서 새롭게 추가할 item의 id가 기존 상품의 id인지를 비교해서 idx를 찾기
+    const idx = state.items.findIndex(
+      // 지금 추가하려는 음식의 id가 기존 음식의 id와 같니?
+      (oldItem) => action.item.id === oldItem.id,
+    );
+
+    const existingItems = [...state.items]; // 기존 배열을 복사
+    const prevCartItem = existingItems[idx]; // 위에서 찾은 인덱스로 요소를 하나만 지목
+
+    let updateItems;
+    if (idx === -1) {
+      // 신규 아이템
+      // 기존 상태가 가지고 있는 카트 항목에 새로운 음식을 추가
+      updateItems = [...state.items, action.item];
+    } else {
+      prevCartItem.amount += action.item.amount;
+      updateItems = [...existingItems];
+    }
 
     // 선택된 음식의 가격과 총액을 바탕으로 금액을 계산
     const updatePrice =
@@ -17,6 +34,27 @@ const cartReducer = (state, action) => {
     // 변경된 상태를 객체 형태로 리턴 -> cartState로 전달됨.
     return {
       items: updateItems,
+      totalPrice: updatePrice,
+    };
+  } else if (action.type === 'REMOVE') {
+    // 최신 상태의 배열을 복사
+    const existingItems = [...state.items];
+
+    // id가 일치하는 대상의 인덱스를 찾자.
+    const idx = state.items.findIndex((oldItem) => action.id === oldItem.id);
+
+    const updatePrice = state.totalPrice - existingItems[idx].price;
+
+    // 수량 하나 감소
+    // 업데이트 직전에 수량이 1이라면 제거 대상입니다.
+    if (existingItems[idx].amount === 1) {
+      existingItems.splice(idx, 1);
+    } else {
+      existingItems[idx].amount--;
+    }
+
+    return {
+      items: existingItems,
       totalPrice: updatePrice,
     };
   }
