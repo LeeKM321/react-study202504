@@ -10,9 +10,14 @@ const cartReducer = (state, action) => {
     const updateItems = [...state.items, action.item];
     console.log('추가된 아이템: ', updateItems);
 
+    // 선택된 음식의 가격과 총액을 바탕으로 금액을 계산
+    const updatePrice =
+      state.totalPrice + action.item.price * action.item.amount;
+
     // 변경된 상태를 객체 형태로 리턴 -> cartState로 전달됨.
     return {
       items: updateItems,
+      totalPrice: updatePrice,
     };
   }
 };
@@ -23,12 +28,14 @@ const cartReducer = (state, action) => {
 const CartProvider = ({ children }) => {
   const [cartState, dispatchCartAction] = useReducer(cartReducer, {
     items: [],
+    totalPrice: 0,
   });
 
   // 컨슈머들이 실제로 받아서 사용할 객체를 따로 정의
   // 밑에 value에 직접 써도 되는데, 길어질 까봐 따로 뺐어요.
   const cartContextData = {
     items: cartState.items,
+    totalPrice: cartState.totalPrice,
     addItem: (item) => {
       dispatchCartAction({
         type: 'ADD',

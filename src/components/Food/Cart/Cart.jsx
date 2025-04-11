@@ -1,23 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Cart.module.scss';
 import CartModal from '../../Modal/CartModal';
-
-const DUMMY_CART = [
-  {
-    id: 'c1',
-    name: '스시',
-    amount: 2,
-    price: 46000,
-  },
-  {
-    id: 'c2',
-    name: '띠드버거',
-    amount: 1,
-    price: 12000,
-  },
-];
+import CartContext from '../store/cart-context';
+import CartItem from './CartItem';
 
 const Cart = ({ onClose }) => {
+  // 실제 우리가 관리하는 전역 카트 상태를 바탕으로 카트 렌더링을 진행하자.
+  const { items, totalPrice } = useContext(CartContext);
+
   const {
     'cart-items': cartItemStyle,
     total,
@@ -30,13 +20,13 @@ const Cart = ({ onClose }) => {
     <CartModal onClose={onClose}>
       {/* 주문 내역(카트 안의 음식 내역) */}
       <ul className={cartItemStyle}>
-        {DUMMY_CART.map((cartItem) => {
-          return <li key={cartItem.id}>{cartItem.name}</li>;
+        {items.map((cartItem) => {
+          return <CartItem key={cartItem.id} cart={cartItem} />;
         })}
       </ul>
       <div className={total}>
         <span>주문 총액</span>
-        <span>48,000원</span>
+        <span>{new Intl.NumberFormat('ko-KR').format(totalPrice)}원</span>
       </div>
       <div className={actions}>
         <button className={btnAlt} onClick={onClose}>
